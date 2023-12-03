@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LoadingController, ToastController } from '@ionic/angular';
 import { AuthenticationService } from '../services/authentication.service';
 import { NavigationExtras, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, take } from 'rxjs';
 import { ChatService } from '../services/chat.service';
 
 @Component({
@@ -17,7 +17,7 @@ export class HomePage implements OnInit {
 
   users: Observable<any>;
   chatRooms: Observable<any>;
-openNewChats: boolean = false;
+  openNewChats: boolean = false;
 
 
   constructor(
@@ -62,7 +62,16 @@ openNewChats: boolean = false;
   };
 
   getChat(item: any) {
-    this.startChat(item)
+    (item?.user).pipe(
+      take(1)
+    ).subscribe(user_data => {
+      const navData: NavigationExtras = {
+        queryParams: {
+          name: user_data?.email
+        }
+      };
+      this.router.navigate(['/chats', item?.id], navData);
+    })
   }
 
   getUsers() {
@@ -80,13 +89,13 @@ openNewChats: boolean = false;
       this.cancel();
       const navData: NavigationExtras = {
         queryParams: {
-          name: item?.name
+          name: item?.email
         }
       }
       console.log(room)
       this.router.navigate(['/chats', room?.id], navData);
     } catch (error) {
-      throw(error);
+      throw (error);
     }
   }
 

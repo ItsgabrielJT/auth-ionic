@@ -7,6 +7,7 @@ import { ChatPageRoutingModule } from './chat-routing.module';
 
 import { ChatPage } from './chat.page';
 import { ChatBoxComponent } from 'src/app/components/chat-box/chat-box.component';
+import { EmptyScreenComponent } from 'src/app/components/empty-screen/empty-screen.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { ChatBoxComponent } from 'src/app/components/chat-box/chat-box.component
     IonicModule,
     ChatPageRoutingModule,
   ],
-  declarations: [ChatPage, ChatBoxComponent]
+  declarations: [ChatPage, ChatBoxComponent, EmptyScreenComponent]
 })
-export class ChatPageModule {}
+export class ChatPageModule { }

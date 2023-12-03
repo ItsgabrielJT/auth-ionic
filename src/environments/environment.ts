@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  firebaseConfig : {
+  firebaseConfig: {
     apiKey: API_KEY,
     authDomain: AUTH_DOMAIN,
     projectId: PROJECT_ID,

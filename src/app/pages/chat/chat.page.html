@@ -8,12 +8,16 @@
 </ion-header>
 
 <ion-content>
+  <app-empty-screen
+    *ngIf="(chats | async)?.length == 0"
+    [model]="model">
+  </app-empty-screen>
 
-  <ion-list 
-    lines="none" 
-    *ngIf="(chats) as chat$">
+  <ion-list
+    lines="none"
+    *ngIf="(chats | async) as chat$">
     <ion-item-group class="chats-group" *ngFor="let chat of chat$">
-      <app-chat-box [chat]="chat" [current_user_id]="currentUserId"></app-chat-box>
+      <app-chat-box [chat]="chat" [current_user_id]="chatService.currentUserId"></app-chat-box>
     </ion-item-group>
   </ion-list>
 
@@ -21,11 +25,11 @@
 
 <ion-footer>
   <ion-toolbar color="light">
-    <ion-textarea 
-      autoGrow 
-      rows="1" 
-      placeholder="Send message" 
-      class="ion-text-center" 
+    <ion-textarea
+      autoGrow
+      rows="1"
+      placeholder="Send message"
+      class="ion-text-center"
       [(ngModel)]="message">
     </ion-textarea>
     <ion-buttons slot="end">

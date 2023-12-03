@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { setDoc, doc, Firestore, collectionData, docData } from '@angular/fire/firestore'
-import { FieldPath, addDoc, collection, getDoc, getDocs, query, where } from 'firebase/firestore';
+import { FieldPath, OrderByDirection, addDoc, collection, getDoc, getDocs, orderBy, query, where } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,7 @@ export class ApiService {
     return collection(this.firestore, path);
   }
 
-  
+
   addDocument(path: any, data: any) {
     const dataRef = this.collectionRef(path);
     return addDoc(dataRef, data);
@@ -43,7 +43,7 @@ export class ApiService {
       dataRef = q
     }
 
-    const collection_data = collectionData<any>(dataRef, {idField:  'id'});
+    const collection_data = collectionData<any>(dataRef, { idField: 'id' });
     return collection_data;
   }
 
@@ -66,9 +66,12 @@ export class ApiService {
       const q = query(dataRef, queryFn);
       dataRef = q;
     }
-   let doc_data = docData<any>(dataRef, {idField: 'id'});
+    let doc_data = docData<any>(dataRef, { idField: 'id' });
     return doc_data;
   }
 
+  orderByQuery(fieldPath: any, directionStr: OrderByDirection = 'asc') {
+    return orderBy(fieldPath, directionStr);
+  }
 
 }
